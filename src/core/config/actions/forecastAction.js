@@ -1,6 +1,6 @@
 import * as type from './types';
 
-export const geForecast = (payload) => ({
+export const getForecast = (payload) => ({
     type: type.GET_FORECAST,
     ...payload
 })

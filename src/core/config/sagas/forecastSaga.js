@@ -3,7 +3,7 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import { ENV } from '../env';
 import { GET_FORECAST, FORECAST_SUCCESS, FORECAST_FAILURE, WEATHER_SUCCESS } from '../actions/types';
 
-getForecastFromApi = () => {
+getForecastFromApi = (lat, long) => {
     return axios.get(`${ENV.URL_API}/forecast?lat=${lat}&lon=${long}&appid=${ENV.API_KEY}`)
         .then(response => {
             return response;

@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react'
-import { StyleSheet, Text, useWindowDimensions } from 'react-native'
+import React from 'react'
+import { StyleSheet, Text } from 'react-native'
 import { Button, Card, Image } from 'react-native-elements'
 
 
+/**
+ * metodo navigation.getParam() busca por la key en este caso de ejemplo usaba la "a"
+ * 
+ */
 
-// TODO:containerStyle en el Image
-
-export default function CardToday({ data, navigation }) {
-    
-
+const CardToday = ({data, navigation}) => {
     return (
             <Card containerStyle={styles.cardSize} >
-                <Image source={{ uri: `https://openweathermap.org/img/w/${data.weather[0].icon}.png` }} style={styles.imageSize} />
+                <Image source={{ uri: `https://openweathermap.org/img/w/${data.weather[0].icon}.png` }} containerStyle={styles.imageSize} />
                 <Text style={styles.textSize}>{data.main.temp}º</Text>
                 <Text style={styles.subTitle}> {data.name} </Text>
                 <Text style={styles.textNormal}> {data.weather[0].main} </Text>
-                <Button title="Ver mas" containerStyle={styles.button} onPress={()=> navigation.navigate('Forecast',data.coord)} />
+                <Button title="Ver mas" containerStyle={styles.button} onPress={() => {navigation.navigate('Forecast', {coord:data} )}}/>
             </Card>
     )
 }
@@ -61,10 +61,12 @@ const styles = StyleSheet.create({
     },
     imageSize: {
         marginBottom:'-20%',
-        width: '50%',
+        marginHorizontal:'15%',
+        width: '68%',
         height: '60%',
         borderRadius: 24,
     }
 })
 
 
+export default CardToday

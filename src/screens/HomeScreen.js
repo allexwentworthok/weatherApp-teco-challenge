@@ -9,15 +9,12 @@ import { getWeather } from '../core/config/actions/weatherAction';
 import { Alert } from 'react-native';
 import Selector from '../components/Selector'
 
-export default function HomeScreen({ navigation }) {
+const HomeScreen = (props) => {
     const dispatch = useDispatch();
     const weather  = useSelector(state => state.weather.weatherState);
     const loading = useSelector(state => state.weather.loading);
 
-
-    useEffect(() => {
-        GetPosition();
-    }, []);
+    useEffect(() => { GetPosition() }, []);
 
     GetPosition = () => {
         try { Geolocation.getCurrentPosition((x) => { dispatch(getWeather({coord: {lat: x.coords.latitude, long: x.coords.longitude}}))},(error) => Alert(error))} 
@@ -36,7 +33,7 @@ export default function HomeScreen({ navigation }) {
                             <Title>Good</Title>
                             <Title>Morning</Title>
                         </View>
-                        <CardToday data={weather} />
+                        <CardToday data={weather} {...props} />
                     </View>
                 }
                 
@@ -66,3 +63,5 @@ const styles = StyleSheet.create({
         marginTop:12,
     }
 })
+
+export default HomeScreen;
