@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Alert, Text, View, StyleSheet, ActivityIndicator } from 'react-native'
-import { Avatar, Button, Icon, ListItem } from 'react-native-elements';
+import React, { useEffect } from 'react'
+import { Alert, View, StyleSheet, ActivityIndicator } from 'react-native'
+import { Avatar, ListItem } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from 'react-redux';
 import BackButton from '../components/BackButton';
-import Layout from '../components/Layout';
 import Title from '../components/Title';
 import { getForecast } from '../core/config/actions/forecastAction';
 import { convertDatetime } from '../core/helpers/helper';
@@ -31,8 +30,8 @@ const Forecast = (props) => {
 
     return (
         <View style={styles.container}>
-            <View>
-                <Title> {name}</Title>
+            <View style={{alignItems:'center'}} >
+                <Title>{name}</Title>
                 <BackButton {...props}/>
             </View>
             <ScrollView centerContent={true} style={styles.scroll} >
@@ -40,19 +39,17 @@ const Forecast = (props) => {
                 loading === true ? 
                 <ActivityIndicator size="large" />
                 :
-                <View>
+                <View style={{justifyContent: 'center'}}>
                     {
                         weather.daily.map((x,i) => (
-                            <View style={{justifyContent: 'center', marginBottom:12}} >
                                 <ListItem key={i} bottomDivider containerStyle={styles.listItem} >
-                                <Avatar source={{ uri: `https://openweathermap.org/img/w/${x.weather[0].icon}.png` }} />
+                                    <Avatar source={{ uri: `https://openweathermap.org/img/w/${x.weather[0].icon}.png` }} />
                                     <ListItem.Content>
                                     <ListItem.Title>{convertDatetime(x.dt)}</ListItem.Title>
                                     <ListItem.Subtitle>Maxima: {Number(x.temp.max).toFixed(1)}º</ListItem.Subtitle>
                                     <ListItem.Subtitle>Minima: {Number(x.temp.min).toFixed(1)}º</ListItem.Subtitle>
                                     </ListItem.Content>
                                 </ListItem>
-                            </View>
                         ) )
                     }
                 </View>
@@ -67,7 +64,8 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         maxHeight: 720,
-        marginTop:100
+        marginTop:100,
+        
     },
     scroll: {
         marginTop:'5%',
@@ -75,7 +73,8 @@ const styles = StyleSheet.create({
     },
     listItem:{
         borderRadius:18,
-        marginHorizontal:12
+        marginHorizontal:12,
+        marginBottom:12
     }
 })
 
