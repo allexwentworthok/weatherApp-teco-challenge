@@ -4,7 +4,7 @@ import { ENV } from '../env';
 import { GET_WEATHER, WEATHER_SUCCESS, WEATHER_FAILURE } from '../actions/types';
 
 getFromApi = (lat, long) => {
-    return axios.get(`${ENV.URL_API}/weather?lat=${lat}&lon=${long}&appid=${ENV.API_KEY}`)
+    return axios.get(`${ENV.URL_API}/weather?lat=${lat}&lon=${long}&appid=${ENV.API_KEY}&units=metric&lang=es`)
         .then(response => {
             return response;
         }).catch(error => {

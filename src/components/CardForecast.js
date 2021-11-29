@@ -14,9 +14,9 @@ export default function CardForecast({ data }) {
     return (
             <Card containerStyle={styles.cardSize} >
                 <Image source={{ uri: `${ urlIcon }` }} style={styles.imageSize} />
-                <Text style={styles.textSize}>a</Text>
-                <Text style={styles.textSize}> a </Text>
-                <Text style={styles.textSize}> a </Text>
+                <Text style={styles.textSize}></Text>
+                <Text style={styles.textSize}></Text>
+                <Text style={styles.textSize}></Text>
             </Card>
     )
 }

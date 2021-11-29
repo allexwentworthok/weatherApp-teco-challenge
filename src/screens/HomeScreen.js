@@ -12,41 +12,43 @@ import Selector from '../components/Selector'
 const HomeScreen = (props) => {
     const dispatch = useDispatch();
     const weather  = useSelector(state => state.weather.weatherState);
-    const loading = useSelector(state => state.weather.loading);
 
     useEffect(() => { GetPosition() }, []);
 
-    GetPosition = () => {
-        try { Geolocation.getCurrentPosition((x) => { dispatch(getWeather({coord: {lat: x.coords.latitude, long: x.coords.longitude}}))},(error) => Alert(error))} 
+    const GetPosition = async () => {
+        try {
+            Geolocation.getCurrentPosition((x) => { 
+            dispatch(getWeather({coord: {lat: x.coords.latitude, long: x.coords.longitude}}))},
+            (error) => {Alert.alert('No pudimos acceder a tu ubicación')},
+        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+        )} 
         catch(error) {Alert(error)}
     }
 
     return (
-        <>
+        <View>
             <Layout>
-                {
-                    loading === true ?
-                    <Button title="Loading..." style={styles.loading} />
-                    :
                     <View style={styles.containerCard} >
                         <View style={styles.title} >
-                            <Title>Good</Title>
-                            <Title>Morning</Title>
+                            <Title>Ale's</Title>
+                            <Title>Weather App</Title>
+                            <CardToday data={weather} {...props} />
                         </View>
-                        <CardToday data={weather} {...props} />
                     </View>
-                }
-                
             </Layout>
-            <Selector />
-        </>
+            <View style={{flex:2}} >
+                <Selector />
+            </View>
+        </View>
         
     )
 }
 
 const styles = StyleSheet.create({
     loading:{
-        marginTop:'40%'
+        flex:1,
+        textAlign:'center',
+        marginButton:'40%'
     },
     title: {
         alignItems:'center',

@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { Button, Card, Image } from 'react-native-elements'
+import { useSelector } from 'react-redux';
+import { convertDatetime } from '../core/helpers/helper';
 
 
 /**
@@ -9,18 +11,33 @@ import { Button, Card, Image } from 'react-native-elements'
  */
 
 const CardToday = ({data, navigation}) => {
+
+    const loading = useSelector(state => state.weather.loading);
+
     return (
             <Card containerStyle={styles.cardSize} >
-                <Image source={{ uri: `https://openweathermap.org/img/w/${data.weather[0].icon}.png` }} containerStyle={styles.imageSize} />
-                <Text style={styles.textSize}>{data.main.temp}º</Text>
-                <Text style={styles.subTitle}> {data.name} </Text>
-                <Text style={styles.textNormal}> {data.weather[0].main} </Text>
-                <Button title="Ver mas" containerStyle={styles.button} onPress={() => {navigation.navigate('Forecast', {coord:data} )}}/>
+                {
+                    loading === true ?
+                        <ActivityIndicator size='large' title="Loading..." style={styles.loading} />
+                    : 
+                    (<>
+                        <Image source={{ uri: `https://openweathermap.org/img/w/${data.weather[0].icon}.png` }} containerStyle={styles.imageSize} />
+                        <Text style={styles.textSize}>{Number(data.main.temp).toFixed(1)}º</Text>
+                        <Text style={styles.subTitle}> {data.name} </Text>
+                        <Text style={styles.textNormal}> {data.weather[0].description} </Text>
+                        <Button title="Ver mas" containerStyle={styles.button} onPress={() => {navigation.navigate('Forecast', {coord:data, city: data.name} )}}/>
+                    </>)
+                }
+                
             </Card>
     )
 }
 
 const styles = StyleSheet.create({
+    loading:{
+        textAlign:'center',
+        marginButton:'40%'
+    },
     button: {
         marginTop: 24,
         borderRadius: 12,
@@ -46,6 +63,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     cardSize: {
+        justifyContent:'center',
         width: 260,
         height: 450,
         borderRadius: 24,

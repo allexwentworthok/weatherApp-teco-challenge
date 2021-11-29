@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { useDispatch } from 'react-redux';
 import { getWeather } from '../core/config/actions/weatherAction';
 
-const city = {
-    'BuenosAires': { lat:-34.6085769030798, long:-58.47543282627552 },
-    'España': { lat:40.461657803868405, long:-3.649577661595032 },
-    'Londres': { lat:51.537457933288664, long: -0.16186771650325227},
-    'Amsterdam': { lat: 52.34303462762227, long: 4.86580992179384 }
-}
+const city = [
+    {key: 1, label: 'BuenosAires', value: { lat:-34.6085769030798, long:-58.47543282627552}},
+    {key: 2, label: 'España', value: { lat:40.461657803868405, long:-3.649577661595032 }},
+    {key: 3, label: 'Londres', value: { lat:51.537457933288664, long: -0.16186771650325227}},
+    {key: 4, label: 'Amsterdam', value: { lat: 52.34303462762227, long: 4.86580992179384 }},
+]
 
-export default function Selector({ props }) {
+export default function Selector( props ) {
     const dispatch = useDispatch()
-    const [selectedCity, setSelectedCity] = useState(selectedCity);
-    
-    useEffect(() => {
-        setSelectedCity(selectedCity)
-    }, [selectedCity])
+    const [selectedCity, setSelectedCity] = useState(null);
 
-    handleSelect = (itemValue, itemIndex) =>{
-        setSelectedCity(itemValue)
+    
+    handleSelect = (itemValue) =>{ 
+        setSelectedCity(itemValue),
         dispatch(getWeather({coord: itemValue}))
     }
+
     return (
-        <Picker selectedValue={selectedCity} onValueChange={(itemValue, itemIndex) => handleSelect(itemValue, itemIndex)}>
-            <Picker.Item label="Ciudad actual" />
-            <Picker.Item label="Amsterdam" value={city.Amsterdam} />
-            <Picker.Item label="Buenos Aires" value={city.BuenosAires} />
-            <Picker.Item label="España" value={city.España} />
-            <Picker.Item label="Londres" value={city.Londres} />
+        <Picker mode='dropdown' selectedValue={selectedCity} onValueChange={(itemValue) => handleSelect(itemValue)}>
+            <Picker.Item key="" label="Ciudad actual"  />
+            {
+                city.map(x =>{  
+                    return <Picker.Item key={x.key}  label={x.label} value={x.value} />
+                })
+            }
         </Picker>
     )
 }
+
