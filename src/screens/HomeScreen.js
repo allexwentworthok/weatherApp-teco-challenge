@@ -26,8 +26,7 @@ const HomeScreen = (props) => {
     }
 
     return (
-        <View>
-            <Layout>
+        <View><Layout>
                     <View style={styles.containerCard} >
                         <View style={styles.title} >
                             <Title>Ale's</Title>
@@ -37,7 +36,7 @@ const HomeScreen = (props) => {
                     </View>
             </Layout>
             <View style={{flex:2}} >
-                <Selector />
+                <Selector  />
             </View>
         </View>
         

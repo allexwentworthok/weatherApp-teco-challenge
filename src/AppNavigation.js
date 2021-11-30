@@ -1,4 +1,3 @@
-import React from 'react'
 import { createStackNavigator } from 'react-navigation-stack'
 
 import { HomeScreen, Forecast } from '../src/screens/index';
@@ -14,5 +13,5 @@ const AppNavigator = createStackNavigator(
         headerMode: 'none'
     }
 );
- 
+
 export default createAppContainer(AppNavigator);
