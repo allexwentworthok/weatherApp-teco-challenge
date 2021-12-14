@@ -1,8 +1,7 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { useDispatch } from 'react-redux';
 import { getWeather } from '../core/config/actions/weatherAction';
-import SmoothPicker from 'react-native-smooth-picker';
 
 const city = [
     {key: 1, label: 'BuenosAires', value: { lat:-34.6085769030798, long:-58.47543282627552}},
