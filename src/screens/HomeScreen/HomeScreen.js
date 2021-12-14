@@ -12,11 +12,9 @@ import Title from '../../components/Title'
 const HomeScreen = (props) => {
     const dispatch = useDispatch();
     const weather  = useSelector(state => state.weather.weatherState);
-
-    // Usamos useEffect para llamar a la funcion asi no ponemos todo el codigo de la funcion a ejecutarse dentro de el hook
+    
     useEffect(() => { GetPosition() }, []);
 
-    // Obtenemos posicion
     const GetPosition = () => {
         Geolocation.getCurrentPosition((x) => { 
             dispatch(getWeather({coord: {lat: x.coords.latitude, long: x.coords.longitude}}))},
@@ -35,7 +33,7 @@ const HomeScreen = (props) => {
                         </View>
                     </View>
             </Layout>
-            <View style={{flex:2}} ><Selector /></View>
+            <View style={{flex:2}} ><Selector data={weather} /></View>
         </View>
         
     )
