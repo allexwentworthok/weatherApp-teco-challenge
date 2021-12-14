@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Picker } from '@react-native-picker/picker'
 import { useDispatch } from 'react-redux';
 import { getWeather } from '../core/config/actions/weatherAction';
@@ -13,21 +13,21 @@ const city = [
 function Selector( props ) {
     const dispatch = useDispatch()
     const [selectedCity, setSelectedCity] = useState(selectedCity);
-    const pickerRef = useRef(selectedCity);
-
-    const handleSelect = (itemValue) => { 
-        setSelectedCity(itemValue),
-        dispatch(getWeather({coord: itemValue}))
+    /**
+     * Aca recibo un string por que la libreria recuerda solo strings o numbers
+     * Lo recibo desde un JSON.stringify y lo vuelvo a parsear cuando lo envio a redux
+     */
+    const handleSelect = i => {
+        setSelectedCity(i),
+        dispatch(getWeather({coord: JSON.parse(i)}))
     }
 
     return (
-        <Picker ref={pickerRef} mode='dropdown' selectedValue={selectedCity} onValueChange={(itemValue) => handleSelect(itemValue)}>
-            <Picker.Item key="" label="Ciudad actual"  />
-            {
-                city.map(x =>{  
-                    return <Picker.Item key={x.key} label={x.label} value={x.value} />
-                })
-            }
+        <Picker mode='dropdown' selectedValue={selectedCity} onValueChange={(i) => handleSelect(i)}>
+            <Picker.Item key={0} label="Ciudad actual"  />
+            {city.map(x =>{  
+                return <Picker.Item key={x.key} label={x.label} value={JSON.stringify(x.value)} />
+            })}
         </Picker>
     )
 }
